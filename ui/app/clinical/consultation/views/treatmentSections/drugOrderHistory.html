@@ -31,6 +31,15 @@
                                 </div>
 								<div class="button-group-wrapper">
                                     <div class="button-group">
+                                        <button ng-if="cdssaAlerts && getPreviousDrugAlert(drugOrder)"
+                                        class="cdss-alert-icon"
+                                        ng-click="showCDSSAlert(cdssAlert)"
+                                        >
+                                            <i class="fa"
+                                            ng-class="{'fa-exclamation-triangle critical': cdssAlert.indicator == 'critical','fa-exclamation-triangle warning' : cdssAlert.indicator == 'warning', 'fa-info-circle info': cdssAlert.indicator == 'info'}"
+                                            ></i>
+                                        
+                                        </button>
                                         <button ng-repeat="orderAttribute in drugOrder.orderAttributes" show-if-privilege="{{dispensePrivilege}}"
                                                 class="dispense-btn" ng-disabled="shouldBeDisabled(drugOrder,orderAttribute)"
                                                 ng-click="updateOrderAttribute(drugOrder,orderAttribute)">

@@ -78,9 +78,9 @@ angular.module('bahmni.clinical')
 
             $scope.submitAudit = function (index) {
                 var patientUuid = $scope.patient.uuid;
-                var message = $scope.cdssaAlerts[index].summary.replace(/"/g, '');
+                var message = $scope.newAlerts[index].summary.replace(/"/g, '');
                 var eventType = 'Dismissed: ' + $scope.treatment.audit;
-                $scope.cdssaAlerts.splice(index, 1);
+                $scope.newAlerts.splice(index, 1);
                 return drugService
                 .cdssAudit(patientUuid, eventType, message, 'CDSS')
                 .then(function () {
@@ -516,14 +516,17 @@ angular.module('bahmni.clinical')
             };
 
             $scope.closeAlert = function (index) {
-                $scope.cdssaAlerts = $scope.cdssaAlerts.filter(function (alert, alertIndex) {
+                $scope.newAlerts = $scope.newAlerts.filter(function (
+                  _alert,
+                  alertIndex
+                ) {
                     return alertIndex !== index;
                 });
             };
 
             $scope.toggleAlertDetails = function (index) {
-                $scope.cdssaAlerts[index].showDetails =
-                  !$scope.cdssaAlerts[index].showDetails;
+                $scope.newAlerts[index].showDetails =
+                  !$scope.newAlerts[index].showDetails;
             };
 
             $scope.getDataResults = function (drugs) {
@@ -698,7 +701,19 @@ angular.module('bahmni.clinical')
                         .then(function (bundle) {
                             var cdssaAlerts = drugService.sendDiagnosisDrugBundle(bundle);
                             cdssaAlerts.then(function (response) {
-                                $scope.cdssaAlerts = sortInteractionsByStatus(response.data);
+                                var alerts = sortInteractionsByStatus(response.data);
+                                $scope.cdssaAlerts = alerts || [];
+                                $rootScope.cdssaAlerts = $scope.cdssaAlerts;
+                                $scope.newAlerts = $scope.cdssaAlerts.filter(function (alert) {
+                                    if (alert.referenceMedication && alert.referenceMedication.coding && alert.referenceMedication.coding.length > 0) {
+                                        var codes = [];
+                                        alert.referenceMedication.coding.forEach(function (item) {
+                                            codes.push(item.code);
+                                        });
+
+                                        return codes.indexOf($scope.treatment.drug.uuid) !== -1;
+                                    }
+                                });
                             });
                         });
                     }
@@ -729,14 +744,14 @@ angular.module('bahmni.clinical')
                         return;
                     }
                     delete $scope.treatment.drug;
-                    $scope.cdssaAlerts = [];
+                    $scope.newAlerts = [];
                 };
             })();
 
             $scope.clearForm = function () {
                 $scope.treatment = newTreatment();
                 $scope.formInvalid = false;
-                $scope.cdssaAlerts = [];
+                $scope.newAlerts = [];
                 clearHighlights();
                 markVariable("startNewDrugEntry");
             };

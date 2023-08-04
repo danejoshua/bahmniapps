@@ -216,6 +216,17 @@
                 }
             }
         }
+        .cdss-alert-icon {
+            .critical {
+                color: #FF0000 !important;
+            }
+            .warning {
+                color: #FFA500 !important;
+            }
+            .info {
+                color: #00A3E0 !important;
+            }
+        }
     }
 
     .drug-stop-container {

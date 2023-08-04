@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('bahmni.clinical')
-    .controller('DrugOrderHistoryController', ['$scope', '$filter', '$stateParams', 'activeDrugOrders',
+    .controller('DrugOrderHistoryController', ['$scope', '$filter', '$stateParams', 'activeDrugOrders', 'messagingService',
         'treatmentConfig', 'treatmentService', 'spinner', 'drugOrderHistoryHelper', 'visitHistory', '$translate', '$rootScope',
-        function ($scope, $filter, $stateParams, activeDrugOrders, treatmentConfig, treatmentService, spinner,
+        function ($scope, $filter, $stateParams, activeDrugOrders, messagingService, treatmentConfig, treatmentService, spinner,
                    drugOrderHistoryHelper, visitHistory, $translate, $rootScope) {
             var DrugOrderViewModel = Bahmni.Clinical.DrugOrderViewModel;
             var DateUtil = Bahmni.Common.Util.DateUtil;
@@ -187,7 +187,7 @@ angular.module('bahmni.clinical')
 
             $scope.updateAllOrderAttributesByName = function (orderAttribute, drugOrderGroup) {
                 drugOrderGroup[orderAttribute.name] = drugOrderGroup[orderAttribute.name] || {};
-                drugOrderGroup[orderAttribute.name].selected = drugOrderGroup[orderAttribute.name].selected ? false : true;
+                drugOrderGroup[orderAttribute.name].selected = !drugOrderGroup[orderAttribute.name].selected;
 
                 drugOrderGroup.drugOrders.forEach(function (drugOrder) {
                     var selectedOrderAttribute = getAttribute(drugOrder, orderAttribute.name);
@@ -228,6 +228,37 @@ angular.module('bahmni.clinical')
 
             var getAttribute = function (drugOrder, attributeName) {
                 return _.find(drugOrder.orderAttributes, {name: attributeName});
+            };
+
+            $scope.getPreviousDrugAlert = function (drugOrder) {
+                var drug = drugOrder.drug;
+                var cdssAlerts = $rootScope.cdssaAlerts;
+                if (cdssAlerts) {
+                    for (var i = 0; i < cdssAlerts.length; i++) {
+                        var cdssAlert = cdssAlerts[i];
+                        var referenceMedication = cdssAlert.referenceMedication;
+                        if (referenceMedication) {
+                            var coding = referenceMedication.coding;
+                            if (coding) {
+                                for (var j = 0; j < coding.length; j++) {
+                                    var code = coding[j].code;
+                                    if (drug.uuid === code) {
+                                        $scope.cdssAlert = cdssAlert;
+                                        return cdssAlert;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return null;
+            };
+
+            $scope.showCDSSAlert = function (drugOrder) {
+                messagingService.showMessage(
+                'error',
+                drugOrder.detail,
+              );
             };
 
             init();
