@@ -548,9 +548,7 @@ angular.module('bahmni.clinical')
                         },
                         medicationCodeableConcept: {
                             id: medication.drug.uuid,
-                            coding: [
-                                coding
-                            ],
+                            coding: coding,
                             text: medication.drugNameDisplay
                         }
                     };
@@ -561,10 +559,10 @@ angular.module('bahmni.clinical')
             };
             var extractCodeInfo = function (medication) {
                 if (!(medication.drug.drugReferenceMaps && medication.drug.drugReferenceMaps.length > 0)) {
-                    return Promise.resolve({
+                    return Promise.resolve([{
                         code: medication.drug.uuid,
                         display: medication.drug.name
-                    });
+                    }]);
                 } else {
                     var drugReferenceMap = medication.drug.drugReferenceMaps[0];
                     if (!$scope.conceptSource) {
@@ -577,24 +575,29 @@ angular.module('bahmni.clinical')
                             if (conceptCode) {
                                 localStorage.setItem("conceptSource", conceptCode.system);
                                 $scope.conceptSource = conceptCode.system;
-                                return {
+                                return [{
                                     system: $scope.conceptSource,
                                     code: drugReferenceMap.conceptReferenceTerm && drugReferenceMap.conceptReferenceTerm.display && drugReferenceMap.conceptReferenceTerm.display.split(':')[1].trim(),
                                     display: medication.drug.name
-                                };
+                                },
+                                {
+                                    code: medication.drug.uuid,
+                                    system: 'https://fhir.openmrs.org/',
+                                    display: medication.drug.name
+                                }];
                             } else {
-                                return {
+                                return [{
                                     code: medication.drug.uuid,
                                     display: medication.drug.name
-                                };
+                                }];
                             }
                         });
                     } else {
-                        return Promise.resolve({
+                        return Promise.resolve([{
                             system: $scope.conceptSource,
                             code: drugReferenceMap.conceptReferenceTerm && drugReferenceMap.conceptReferenceTerm.display && drugReferenceMap.conceptReferenceTerm.display.split(':')[1].trim(),
                             display: medication.drug.name
-                        });
+                        }]);
                     }
                 }
             };
