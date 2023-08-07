@@ -254,12 +254,5 @@ angular.module('bahmni.clinical')
                 return null;
             };
 
-            $scope.showCDSSAlert = function (drugOrder) {
-                messagingService.showMessage(
-                'error',
-                drugOrder.detail,
-              );
-            };
-
             init();
         }]);
