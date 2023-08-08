@@ -582,7 +582,7 @@ angular.module('bahmni.clinical')
                                 },
                                 {
                                     code: medication.drug.uuid,
-                                    system: 'https://fhir.openmrs.org/',
+                                    system: 'https://fhir.openmrs.org',
                                     display: medication.drug.name
                                 }];
                             } else {
@@ -596,6 +596,11 @@ angular.module('bahmni.clinical')
                         return Promise.resolve([{
                             system: $scope.conceptSource,
                             code: drugReferenceMap.conceptReferenceTerm && drugReferenceMap.conceptReferenceTerm.display && drugReferenceMap.conceptReferenceTerm.display.split(':')[1].trim(),
+                            display: medication.drug.name
+                        },
+                        {
+                            code: medication.drug.uuid,
+                            system: 'https://fhir.openmrs.org',
                             display: medication.drug.name
                         }]);
                     }
@@ -703,6 +708,8 @@ angular.module('bahmni.clinical')
                         $scope.createFhirBundle(params.patient, params.conditions, params.medications, params.diagnosis)
                         .then(function (bundle) {
                             var cdssaAlerts = drugService.sendDiagnosisDrugBundle(bundle);
+                            var drug = consultationData.draftDrug[0].drug;
+                            var drugMaps = drug.drugReferenceMaps[0] ? drug.drugReferenceMaps[0].conceptReferenceTerm.display.split(':') : [];
                             cdssaAlerts.then(function (response) {
                                 var alerts = sortInteractionsByStatus(response.data);
                                 $scope.cdssaAlerts = alerts || [];
@@ -714,7 +721,7 @@ angular.module('bahmni.clinical')
                                             codes.push(item.code);
                                         });
 
-                                        return codes.indexOf($scope.treatment.drug.uuid) !== -1;
+                                        return drugMaps[1] && codes.indexOf(drugMaps[1].trim()) !== -1;
                                     }
                                 });
                             });

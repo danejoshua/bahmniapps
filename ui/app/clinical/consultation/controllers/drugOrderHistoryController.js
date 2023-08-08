@@ -242,7 +242,8 @@ angular.module('bahmni.clinical')
                             if (coding) {
                                 for (var j = 0; j < coding.length; j++) {
                                     var code = coding[j].code;
-                                    if (drug.uuid === code) {
+                                    var display = coding[j].display;
+                                    if (drug.uuid === code || drug.name === display) {
                                         $scope.cdssAlert = cdssAlert;
                                         return cdssAlert;
                                     }
