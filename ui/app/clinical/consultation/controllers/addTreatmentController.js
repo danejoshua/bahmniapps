@@ -692,6 +692,19 @@ angular.module('bahmni.clinical')
                 });
             }
 
+            function filterNewAlerts (cdssAlerts, drugMaps) {
+                return cdssAlerts.filter(function (alert) {
+                    if (alert.referenceMedication && alert.referenceMedication.coding && alert.referenceMedication.coding.length > 0) {
+                        var codes = [];
+                        alert.referenceMedication.coding.forEach(function (item) {
+                            codes.push(item.code);
+                        });
+
+                        return drugMaps[1] && codes.indexOf(drugMaps[1].trim()) !== -1;
+                    }
+                });
+            }
+
             (function () {
                 var selectedItem;
                 $scope.onSelect = function (item) {
@@ -714,16 +727,7 @@ angular.module('bahmni.clinical')
                                 var alerts = sortInteractionsByStatus(response.data);
                                 $scope.cdssaAlerts = alerts || [];
                                 $rootScope.cdssaAlerts = $scope.cdssaAlerts;
-                                $scope.newAlerts = $scope.cdssaAlerts.filter(function (alert) {
-                                    if (alert.referenceMedication && alert.referenceMedication.coding && alert.referenceMedication.coding.length > 0) {
-                                        var codes = [];
-                                        alert.referenceMedication.coding.forEach(function (item) {
-                                            codes.push(item.code);
-                                        });
-
-                                        return drugMaps[1] && codes.indexOf(drugMaps[1].trim()) !== -1;
-                                    }
-                                });
+                                $scope.newAlerts = filterNewAlerts($scope.cdssaAlerts, drugMaps);
                             });
                         });
                     }

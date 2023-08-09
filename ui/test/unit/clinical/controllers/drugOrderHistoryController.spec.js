@@ -5,13 +5,13 @@ describe("DrugOrderHistoryController", function () {
     beforeEach(module('bahmni.clinical'));
 
     var scope, prescribedDrugOrders, activeDrugOrder, _treatmentService,
-        retrospectiveEntryService, appService, rootScope, visitHistory;
+        retrospectiveEntryService, appService, rootScope, visitHistory, ngDialog;
     var DateUtil = Bahmni.Common.Util.DateUtil;
     var treatmentConfig = {
         drugOrderHistoryConfig: {
             numberOfVisits: 4
         }
-    }
+    };
 
     var translate;
     beforeEach(module(function ($provide) {
@@ -44,6 +44,7 @@ describe("DrugOrderHistoryController", function () {
         retrospectiveEntryService.getRetrospectiveEntry.and.returnValue(retrospectiveEntry);
         spinner = jasmine.createSpyObj('spinner', ['forPromise']);
         visitHistory = {};
+        ngDialog = jasmine.createSpyObj('ngDialog', ['open', 'close']);
     }));
 
     var initController = function () {
@@ -57,7 +58,8 @@ describe("DrugOrderHistoryController", function () {
             visitContext: {},
             spinner: spinner,
             visitHistory: visitHistory,
-            treatmentConfig: treatmentConfig
+            treatmentConfig: treatmentConfig,
+            ngDialog: ngDialog
         });
         rootScope.$apply();
     };

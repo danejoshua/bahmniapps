@@ -217,14 +217,22 @@
             }
         }
         .cdss-alert-icon {
+            border: none !important;
+            background: none !important;
             .critical {
-                color: #FF0000 !important;
+                &:hover {
+                    color: #FF0000 !important;
+                }
             }
             .warning {
-                color: #FFA500 !important;
+                &:hover {
+                    color: #FFA500 !important;
+                }
             }
             .info {
-                color: #00A3E0 !important;
+                &:hover {
+                    color: #00A3E0 !important;
+                }
             }
         }
     }

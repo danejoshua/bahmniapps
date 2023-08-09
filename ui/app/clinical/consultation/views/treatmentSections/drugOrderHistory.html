@@ -33,9 +33,10 @@
                                     <div class="button-group">
                                         <button ng-if="cdssaAlerts && getPreviousDrugAlert(drugOrder)"
                                         class="cdss-alert-icon"
+                                        ng-click="getDrugAlert(getPreviousDrugAlert(drugOrder))"
                                         >
                                             <i class="fa"
-                                            ng-class="{'fa-exclamation-triangle critical': cdssAlert.indicator == 'critical','fa-exclamation-triangle warning' : cdssAlert.indicator == 'warning', 'fa-info-circle info': cdssAlert.indicator == 'info'}"
+                                            ng-class="{'fa-exclamation-triangle critical': getPreviousDrugAlert(drugOrder).indicator == 'critical','fa-exclamation-triangle warning' : getPreviousDrugAlert(drugOrder).indicator == 'warning', 'fa-info-circle info': getPreviousDrugAlert(drugOrder).indicator == 'info'}"
                                             ></i>
                                         
                                         </button>

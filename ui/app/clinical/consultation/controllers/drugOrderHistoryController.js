@@ -2,9 +2,9 @@
 
 angular.module('bahmni.clinical')
     .controller('DrugOrderHistoryController', ['$scope', '$filter', '$stateParams', 'activeDrugOrders', 'messagingService',
-        'treatmentConfig', 'treatmentService', 'spinner', 'drugOrderHistoryHelper', 'visitHistory', '$translate', '$rootScope',
+        'treatmentConfig', 'treatmentService', 'spinner', 'drugOrderHistoryHelper', 'visitHistory', '$translate', 'ngDialog', '$rootScope',
         function ($scope, $filter, $stateParams, activeDrugOrders, messagingService, treatmentConfig, treatmentService, spinner,
-                   drugOrderHistoryHelper, visitHistory, $translate, $rootScope) {
+                   drugOrderHistoryHelper, visitHistory, $translate, ngDialog, $rootScope) {
             var DrugOrderViewModel = Bahmni.Clinical.DrugOrderViewModel;
             var DateUtil = Bahmni.Common.Util.DateUtil;
             var currentVisit = visitHistory.activeVisit;
@@ -241,9 +241,10 @@ angular.module('bahmni.clinical')
                             var coding = referenceMedication.coding;
                             if (coding) {
                                 for (var j = 0; j < coding.length; j++) {
-                                    var code = coding[j].code;
-                                    var display = coding[j].display;
-                                    if (drug.uuid === code || drug.name === display) {
+                                    if (
+                                      drug.uuid === coding[j].code ||
+                                      drug.name === coding[j].display
+                                    ) {
                                         $scope.cdssAlert = cdssAlert;
                                         return cdssAlert;
                                     }
@@ -253,6 +254,19 @@ angular.module('bahmni.clinical')
                     }
                 }
                 return null;
+            };
+
+            $scope.getDrugAlert = function (alert) {
+                $scope.alertDialog = alert;
+                ngDialog.open({
+                    template: 'consultation/views/treatmentSections/cdssAlertModal.html',
+                    scope: $scope
+                });
+                $scope.popupActive = true;
+            };
+
+            $scope.closeDialog = function () {
+                ngDialog.close();
             };
 
             init();

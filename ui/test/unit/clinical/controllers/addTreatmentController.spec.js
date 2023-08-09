@@ -605,6 +605,7 @@ describe("AddTreatmentController", function () {
             ];
 
             beforeEach(function () {
+                scope.treatment.drug = {name: 'Some Coded Drug', drugReferenceMaps: [{conceptReferenceTerm: {display: 'SNOMED: 123'}}]};
                 scope.cdssaAlerts = alerts;
                 rootScope.cdssaAlerts = alerts;
                 scope.newAlerts = alerts;
