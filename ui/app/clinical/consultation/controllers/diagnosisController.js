@@ -231,9 +231,13 @@ angular.module('bahmni.clinical')
                 if (diagnoses && diagnoses.length > 0 && alerts && alerts.length > 0) {
                     diagnoses.forEach(function (diagnosis) {
                         diagnosis.alert = alerts.find(function (cdssAlert) {
-                            return cdssAlert.referenceCondition.coding.some(function (coding) {
-                                return diagnosis.codedAnswer.uuid === coding.code;
-                            });
+                            return cdssAlert.referenceCondition && cdssAlert.referenceCondition.coding.some(
+                              function (coding) {
+                                  return (
+                                  diagnosis.codedAnswer.uuid === coding.code
+                                  );
+                              }
+                            );
                         });
                         if (diagnosis.alert) {
                             diagnosis.alert.isActive = true;
