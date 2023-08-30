@@ -198,7 +198,6 @@ angular.module('bahmni.clinical')
                             flaggedDiagnoses.push(diagnosis);
                         }
                     });
-                    $scope.consultation.pastDiagnoses = pastDiagnoses;
                 }
                 return flaggedDiagnoses.length > 0;
             };
@@ -221,7 +220,6 @@ angular.module('bahmni.clinical')
                             flaggedDiagnoses.push(diagnosis);
                         }
                     });
-                    $scope.consultation.newlyAddedDiagnoses = diagnoses;
                 }
                 return flaggedDiagnoses;
             };
@@ -242,7 +240,6 @@ angular.module('bahmni.clinical')
                             flaggedDiagnoses.push(diagnosis);
                         }
                     });
-                    $scope.consultation.newlyAddedDiagnoses = diagnoses;
                 }
                 return flaggedDiagnoses;
             };
