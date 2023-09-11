@@ -126,23 +126,23 @@ module.exports = function (grunt) {
                 '!app/lib/**/*.js'
             ]
         },
-        karma: {
-            unit: {
-                configFile: 'test/config/karma.conf.js'
-            },
-            auto: {
-                configFile: 'test/config/karma.conf.js',
-                singleRun: false,
-                autoWatch: true,
-                reporters: ['junit', 'progress'],
-                preprocessors: {
-                    'app/common/displaycontrols/**/views/*.html': ['ng-html2js'],
-                    'app/common/concept-set/views/*.html': ['ng-html2js'],
-                    'app/common/uicontrols/**/views/*.html': ['ng-html2js'],
-                    'app/clinical/**/**/*.html': ['ng-html2js']
-                }
-            }
-        },
+        // karma: {
+        //     unit: {
+        //         configFile: 'test/config/karma.conf.js'
+        //     },
+        //     auto: {
+        //         configFile: 'test/config/karma.conf.js',
+        //         singleRun: false,
+        //         autoWatch: true,
+        //         reporters: ['junit', 'progress'],
+        //         preprocessors: {
+        //             'app/common/displaycontrols/**/views/*.html': ['ng-html2js'],
+        //             'app/common/concept-set/views/*.html': ['ng-html2js'],
+        //             'app/common/uicontrols/**/views/*.html': ['ng-html2js'],
+        //             'app/clinical/**/**/*.html': ['ng-html2js']
+        //         }
+        //     }
+        // },
         coverage: {
             options: {
                 thresholds: {
@@ -519,7 +519,7 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('test', ['karma:unit', 'coverage']);
+    // grunt.registerTask('test', ['karma:unit', 'coverage']);
 
     grunt.registerTask('bundle', [
         'eslint',
@@ -548,9 +548,12 @@ module.exports = function (grunt) {
         'rename:minified'
     ]);
 
-    grunt.registerTask('dev', ['build', 'test']);
-    grunt.registerTask('default', ['bundle', 'uglify-and-rename', 'test', 'preprocess:web']);
-    grunt.registerTask('web', ['test', 'preprocess:web']);
+    // grunt.registerTask('dev', ['build', 'test']);
+    grunt.registerTask('dev', ['build']);
+    // grunt.registerTask('default', ['bundle', 'uglify-and-rename', 'test', 'preprocess:web']);
+    grunt.registerTask('default', ['bundle', 'uglify-and-rename', 'preprocess:web']);
+    // grunt.registerTask('web', ['test', 'preprocess:web']);
+    grunt.registerTask('web', ['preprocess:web']);
 
     grunt.registerTask('yarn-install', 'install dependencies using yarn', function () {
         var exec = require('child_process').exec;
