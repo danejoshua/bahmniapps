@@ -18,9 +18,9 @@
   }
   .button {
     border-radius: 3px;
-    background: linear-gradient(to bottom, #A1D030, #88af28);
-    background-color: #88af28;
-    border: #88af28 1px solid;
+    background: linear-gradient(to bottom, #7474BF, #348AC7);
+    background-color: #348AC7;
+    border: #7474BF 1px solid;
     padding: 5px 14px;
     display: inline-block;
     line-height: 1.2em;
@@ -30,11 +30,11 @@
     max-width: 300px;
     text-decoration: none;
     font-size: 12px;
-    border-color: #7b9f24;
+    border-color: #7474BF;
     float: right;
     &:hover {
-      background: #8eb82a;
-      border-color: #779b23;
+      background: #348AC7;
+      border-color: #7474BF;
     }
   }
 }

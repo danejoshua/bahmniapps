@@ -136,7 +136,7 @@ category: Layout - Button
 
 
 @mixin button($tcolor: #FFF, $bcolor: #DDD, $font: $text) {
-  border-radius: 3px;
+  border-radius: 30px;
   background: linear-gradient(to bottom, $tcolor, $bcolor);
   background-color: $bcolor;
   border: $bcolor 1px solid;

@@ -5,7 +5,7 @@
 	<meta charset="UTF-8" />
 	<meta name="robots" content="noindex,nofollow" />
 	<meta name="googlebot" content="noindex,nofollow" />
-	<title>Bahmni</title>
+	<title>LifeRythem</title>
 	<style>
 		html {
 			overflow: auto;
@@ -74,7 +74,7 @@
 		.launch span {
 			min-height: 55px;
 			display: inline-block;
-			color: #f4834d;
+			color: #4368aa;
 			font-weight: bold;
 			font-size: 18px;
 			text-transform: uppercase;
@@ -245,11 +245,11 @@
 							logoImage.src = data.homePage.logo;
 						}
 
-						if (data.helpLink.url) {
-							var headerTextElement =
-								document.getElementsByClassName("helper_url")[0];
-							headerTextElement.href = data.helpLink.url;
-						}
+						// if (data.helpLink.url) {
+						// 	var headerTextElement =
+						// 		document.getElementsByClassName("helper_url")[0];
+						// 	headerTextElement.href = data.helpLink.url;
+						// }
 						if (data.homePage.title_text) {
 							var titleTextElement =
 								document.getElementsByClassName("title_text")[0];
@@ -311,11 +311,11 @@
 
 <body onload="init()">
 	<div class="clint-logo-wrapper">
-		<img class="client_logo" src="/bahmni/images/bahmniLogoFull.png" />
-		<span class="title_text"> TITLE TEXT </span>
+		<img class="client_logo" src="/bahmni/images/lifeRythemLogoFull.png" />
+		<span class="title_text"> </span>
 	</div>
 	<div class="header_text">
-		<b>WELCOME TO<br />BAHMNI EMR & HOSPITAL SERVICE</b>
+		<b>LifeRythem EMR</b>
 	</div>
 	<div class="container">
 		<h4>GET STARTED</h4>
@@ -329,11 +329,11 @@
 	<div class="bottom-banner-wrapper">
 		<img id="bottom-banner-image" />
 	</div>
-	<div class="power-by">
-		<img src="/bahmni/images/bahmniLogoFull.png" alt="Bahmni" />
+	<!-- <div class="power-by">
+		<img src="/bahmni/images/lifeRythemLogoFull.png" alt="Bahmni" />
 		<a class="helper_url" href="https://bahmni.atlassian.net/wiki/display/BAH/Bahmni+Home">
 			Bahmni Help</a>
-	</div>
+	</div> -->
 </body>
 
 </html>

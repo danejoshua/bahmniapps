@@ -50,7 +50,7 @@ angular.module('bahmni.home')
                 $scope.bottomLogos = response.data.loginPage.bottomLogos;
                 $scope.headerText = response.data.loginPage.showHeaderText;
                 $scope.titleText = response.data.loginPage.showTitleText;
-                $scope.helpLink = response.data.helpLink.url;
+                // $scope.helpLink = response.data.helpLink.url;
             });
 
             localeService.getLocalesLangs().then(function (response) {
